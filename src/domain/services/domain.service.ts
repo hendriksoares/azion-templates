@@ -1,4 +1,4 @@
-import { AzionService } from 'src/@azion/services/azion.service';
+import { AzionService } from 'src/@common/services/azion.service';
 import { DomainCreateDto } from '../dtos/create.dto';
 import { DomainDto } from '../dtos/domain.dto';
 import { DomainUpdateDto } from '../dtos/update.dto';

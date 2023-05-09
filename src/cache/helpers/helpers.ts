@@ -1,4 +1,4 @@
-import { CacheSettings, CacheStatus } from 'src/@azion/enums';
+import { CacheSettings, CacheStatus } from 'src/@common/enums';
 import { CacheCreateDto } from '../dtos/create.dto';
 
 export const set_cdn_cache_override = (seconds: number): CacheCreateDto => {

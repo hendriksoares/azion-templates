@@ -1,4 +1,4 @@
-import { AzionService } from 'src/@azion/services/azion.service';
+import { AzionService } from 'src/@common/services/azion.service';
 import { EdgeApplicationCreateDto } from '../dtos/create.dto';
 import { EdgeApplicationDto } from '../dtos/edge.dto';
 import { EdgeApplicationUpdateDto } from '../dtos/update.dto';

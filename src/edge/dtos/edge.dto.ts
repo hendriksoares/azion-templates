@@ -1,5 +1,5 @@
-import { DeliveryProtocol } from 'src/@azion/enums/delivery-protocol.enum';
-import { TLSVersion } from 'src/@azion/enums/tls-version.enum';
+import { DeliveryProtocol } from 'src/@common/enums/delivery-protocol.enum';
+import { TLSVersion } from 'src/@common/enums/tls-version.enum';
 
 export class EdgeApplicationDto {
   id: string;

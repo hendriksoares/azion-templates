@@ -7,7 +7,6 @@ import axios, { AxiosStatic } from 'axios';
  */
 export abstract class AzionService {
   url: string;
-  token?: string;
   config: any;
   http: AxiosStatic;
 
@@ -16,7 +15,7 @@ export abstract class AzionService {
       this.config = {
         headers: {
           Accept: 'application/json; version=3',
-          Authorization: `Token ${this.token}`,
+          Authorization: `Token ${process.env.AZION_PERSONAL_TOKEN}`,
           'Content-Type': 'application/json',
         },
       };

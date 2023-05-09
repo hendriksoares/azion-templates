@@ -28,7 +28,7 @@ import {
   OriginProtocolPolicy,
   OriginType,
   RulesPhase,
-} from 'src/@azion/enums';
+} from 'src/@common/enums';
 
 export class AWSWordpressService {
   /** AWS Clients */

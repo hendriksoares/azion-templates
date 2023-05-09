@@ -1,7 +1,7 @@
-import { CacheSettings } from 'src/@azion/enums/cache-settings.enum';
-import { DeliveryProtocol } from 'src/@azion/enums/delivery-protocol.enum';
-import { OriginProtocolPolicy } from 'src/@azion/enums/origin-protocol-policy.enum';
-import { OriginType } from 'src/@azion/enums/origin-type.enum';
+import { CacheSettings } from 'src/@common/enums/cache-settings.enum';
+import { DeliveryProtocol } from 'src/@common/enums/delivery-protocol.enum';
+import { OriginProtocolPolicy } from 'src/@common/enums/origin-protocol-policy.enum';
+import { OriginType } from 'src/@common/enums/origin-type.enum';
 
 export class EdgeApplicationCreateDto {
   name: string;

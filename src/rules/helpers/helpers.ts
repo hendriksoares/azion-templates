@@ -1,4 +1,4 @@
-import { RulesCriteriaOperator, RulesBehaviors } from 'src/@azion/enums';
+import { RulesCriteriaOperator, RulesBehaviors } from 'src/@common/enums';
 import { RulesCreateDto } from '../dtos/create.dto';
 
 export const set_cache_to_images = (cache_id: string): RulesCreateDto => {

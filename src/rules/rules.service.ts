@@ -1,7 +1,7 @@
-import { AzionService } from 'src/@azion/services/azion.service';
+import { AzionService } from 'src/@common/services/azion.service';
 import { RulesCreateDto } from './dtos/create.dto';
 import { RulesDto } from './dtos/rules.dto';
-import { RulesPhase } from 'src/@azion/enums';
+import { RulesPhase } from 'src/@common/enums';
 
 /**
  * A class service to manage domain on Azion

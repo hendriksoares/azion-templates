@@ -1,4 +1,4 @@
-import { AzionService } from 'src/@azion/services/azion.service';
+import { AzionService } from 'src/@common/services/azion.service';
 import { OriginDto } from './dtos/origin.dto';
 import { OriginUpdateDto } from './dtos/update.dto';
 
