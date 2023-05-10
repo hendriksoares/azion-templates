@@ -1,4 +1,4 @@
-import { AWSWordpressService } from '../services/aws-wordpress.service';
+import { AWSWordpressService } from 'src/template/services/aws-wordpress.service';
 
 jest.setTimeout(30000);
 jest.mock('src/edge/services/edge.service');

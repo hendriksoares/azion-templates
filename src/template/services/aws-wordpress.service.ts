@@ -143,31 +143,34 @@ export class AWSWordpressService {
       query_string_fields: ['p\r', 'page_id'],
     });
 
-    const caches_promises = [];
-    caches_promises.push(
-      this.cache_service.create(set_cdn_cache_override(1296000), edge_app.id),
-      this.cache_service.create(set_cdn_cache_override(31536000), edge_app.id),
+    const caches = [];
+    caches.push(
+      await this.cache_service.create(
+        set_cdn_cache_override(1296000),
+        edge_app.id,
+      ),
     );
-    const caches = await Promise.all(caches_promises);
+    caches.push(
+      await this.cache_service.create(
+        set_cdn_cache_override(31536000),
+        edge_app.id,
+      ),
+    );
 
     /** 5. configure the cache rules  */
     console.debug('Configure rules engines ');
     const origins = await this.origin_service.find_by_edge(edge_app.id);
-    const rules_promises = [];
-    rules_promises.push(
-      this.rules_service.create(
-        set_cache_to_static(caches[0].id),
-        RulesPhase.REQUEST,
-        edge_app.id,
-      ),
-      this.rules_service.create(
-        set_cache_to_images(caches[1].id),
-        RulesPhase.REQUEST,
-        edge_app.id,
-      ),
-    );
-    await Promise.all(rules_promises);
 
+    await this.rules_service.create(
+      set_cache_to_static(caches[0].id),
+      RulesPhase.REQUEST,
+      edge_app.id,
+    );
+    await this.rules_service.create(
+      set_cache_to_images(caches[1].id),
+      RulesPhase.REQUEST,
+      edge_app.id,
+    );
     await this.rules_service.create(
       set_by_pass_to_path(origins[0].origin_id, '/wordpress/wp'),
       RulesPhase.REQUEST,

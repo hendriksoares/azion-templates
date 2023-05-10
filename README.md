@@ -49,3 +49,7 @@ A execução do template pode ser dividida em 2 etapas:
 >- O primeiro acesso ao Wordpress deve ocorrer via URL da Azion (Domain), pois o blog irá associar a URL base atráves da URL do primeiro acesso;
 >- Devido a acesso a conta de terceiro na AWS o processo não tem rollback por questões de segurança. (Não queremos a permissão de excluir dentro da AWS);
 >- Existe uma padrão de senha mínimo para o banco SQL ( regex: [a-zA-Z0-9]*);
+
+### **1.4. Melhorias**
+- A chave fornecida da AWS não tem permissão para executar as ações necessárias (ou inválida);
+- Tratar erros de chamadas para Azion API
