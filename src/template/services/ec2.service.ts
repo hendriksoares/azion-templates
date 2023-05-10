@@ -2,9 +2,6 @@ import {
   CreateKeyPairCommand,
   CreateKeyPairCommandInput,
   CreateKeyPairCommandOutput,
-  DeleteKeyPairCommand,
-  DeleteKeyPairCommandInput,
-  DeleteKeyPairCommandOutput,
   EC2Client,
 } from '@aws-sdk/client-ec2';
 
@@ -21,15 +18,6 @@ export class EC2Service {
     };
 
     const command = new CreateKeyPairCommand(params);
-    return await this.client.send(command);
-  }
-
-  async delete_key_pair(
-    key_pair_id: string,
-  ): Promise<DeleteKeyPairCommandOutput> {
-    const params: DeleteKeyPairCommandInput = { KeyPairId: key_pair_id };
-
-    const command = new DeleteKeyPairCommand(params);
     return await this.client.send(command);
   }
 }

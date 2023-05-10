@@ -1,8 +1,8 @@
 import { AzionService } from 'src/@common/services/azion.service';
-import { OriginDto } from './dtos/origin.dto';
-import { OriginUpdateDto } from './dtos/update.dto';
+import { OriginDto } from '../dtos/origin.dto';
+import { OriginUpdateDto } from '../dtos/update.dto';
 
-export class OriginsService extends AzionService {
+export class OriginService extends AzionService {
   constructor() {
     super();
     this.url = `${this.url}/edge_applications/:edge_application_id/origins`;

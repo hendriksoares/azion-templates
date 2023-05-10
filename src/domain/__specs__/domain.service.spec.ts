@@ -1,27 +1,27 @@
-import { EdgeApplicationCreateDto } from '../dtos/create.dto';
-import { EdgeApplicationDto } from '../dtos/edge.dto';
-import { EdgeApplicationUpdateDto } from '../dtos/update.dto';
-import { EdgeService } from '../services/edge.service';
+import { DomainCreateDto } from '../dtos/create.dto';
+import { DomainDto } from '../dtos/domain.dto';
+import { DomainUpdateDto } from '../dtos/update.dto';
+import { DomainService } from '../services/domain.service';
 
-describe('# EdgeService', () => {
-  let service: EdgeService;
+describe('# DomainService', () => {
+  let service: DomainService;
 
   beforeEach(() => {
-    service = new EdgeService();
+    service = new DomainService();
     service.http = {
       post: jest.fn().mockReturnValue(
         new Promise((resolve) => {
-          resolve({ data: { results: new EdgeApplicationDto() } });
+          resolve({ data: { results: new DomainDto() } });
         }),
       ),
       get: jest.fn().mockReturnValue(
         new Promise((resolve) => {
-          resolve({ data: { results: new EdgeApplicationDto() } });
+          resolve({ data: { results: new DomainDto() } });
         }),
       ),
       patch: jest.fn().mockReturnValue(
         new Promise((resolve) => {
-          resolve({ data: { results: new EdgeApplicationDto() } });
+          resolve({ data: { results: new DomainDto() } });
         }),
       ),
       delete: jest.fn().mockReturnValue(
@@ -51,8 +51,8 @@ describe('# EdgeService', () => {
   });
 
   describe('## Create', () => {
-    const data = new EdgeApplicationCreateDto();
     beforeEach(async () => {
+      const data = new DomainCreateDto();
       await service.create(data);
     });
     it('should be call external post api', () => {
@@ -70,7 +70,7 @@ describe('# EdgeService', () => {
   });
 
   describe('## Update', () => {
-    const data = new EdgeApplicationUpdateDto();
+    const data = new DomainUpdateDto();
     beforeEach(async () => {
       await service.update(data);
     });

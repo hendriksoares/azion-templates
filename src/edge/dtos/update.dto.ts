@@ -1,5 +1,5 @@
 import { DeliveryProtocol } from 'src/@common/enums/delivery-protocol.enum';
-import { TLSVersion } from 'src/@common/enums/tls-version.enum';
+import { TLSVersion } from 'src/@common/enums';
 
 export class EdgeApplicationUpdateDto {
   id: string;

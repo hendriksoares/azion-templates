@@ -1,6 +1,6 @@
 import { AzionService } from 'src/@common/services/azion.service';
-import { RulesCreateDto } from './dtos/create.dto';
-import { RulesDto } from './dtos/rules.dto';
+import { RulesCreateDto } from '../dtos/create.dto';
+import { RulesDto } from '../dtos/rules.dto';
 import { RulesPhase } from 'src/@common/enums';
 
 /**

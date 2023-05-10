@@ -14,9 +14,9 @@ import { set_cdn_cache_override } from '../../cache/helpers/helpers';
 
 import { EdgeService } from '../../edge/services/edge.service';
 import { DomainService } from '../../domain/services/domain.service';
-import { OriginsService } from '../../origin/origins.service';
-import { CacheService } from '../../cache/cache.service';
-import { RulesService } from '../../rules/rules.service';
+import { OriginService } from '../../origin/services/origin.service';
+import { CacheService } from '../../cache/services/cache.service';
+import { RulesService } from '../../rules/services/rules.service';
 
 import { EdgeApplicationUpdateDto } from '../../edge/dtos/update.dto';
 import { DomainCreateDto } from '../../domain/dtos/create.dto';
@@ -38,7 +38,7 @@ export class AWSWordpressService {
   /** Azion Services */
   edge_service: EdgeService;
   domain_service: DomainService;
-  origin_service: OriginsService;
+  origin_service: OriginService;
   cache_service: CacheService;
   rules_service: RulesService;
 
@@ -48,7 +48,7 @@ export class AWSWordpressService {
     this.edge_service = new EdgeService();
     this.domain_service = new DomainService();
     this.cache_service = new CacheService();
-    this.origin_service = new OriginsService();
+    this.origin_service = new OriginService();
     this.rules_service = new RulesService();
   }
 
@@ -70,8 +70,8 @@ export class AWSWordpressService {
       /** deploy azion stack */
       await this.deploy_azion_stack(stack_name, address);
     } catch (err) {
-      console.log(err);
-      throw 'err';
+      console.error(err);
+      throw err;
       /** TODO 10/04/2023  add rollback when some failure*/
     }
   }
@@ -80,18 +80,21 @@ export class AWSWordpressService {
     if (!process.env.AZION_APP_NAME) throw 'ENV_AZION_APP_NAME_NOUTFOUND';
     if (!process.env.MYSQL_DB_PASSWORD) throw 'ENV_MYSQL_DB_PASSWORD_NOUTFOUND';
     if (!process.env.MYSQL_DB_USER) throw 'ENV_MYSQL_DB_USER_NOUTFOUND';
-    if (!process.env.AZION_APP_NAME) throw 'ENV_AZION_APP_NAME_NOUTFOUND';
+    if (!process.env.MYSQL_DB_ROOT_PASSWORD)
+      throw 'ENV_MYSQL_DB_ROOT_PASSWORD_NOUTFOUND';
 
-    return {
+    const env: EnvPayload = {
       stack_name: process.env.AZION_APP_NAME,
       key_name: process.env.AZION_APP_NAME,
       db_password: process.env.MYSQL_DB_PASSWORD,
       db_user: process.env.MYSQL_DB_USER,
       db_root_password: process.env.MYSQL_DB_ROOT_PASSWORD,
     };
+
+    return env;
   }
 
-  private async deploy_azion_stack(
+  async deploy_azion_stack(
     app_name: string,
     address: string,
     host?: string,
@@ -177,7 +180,7 @@ export class AWSWordpressService {
     );
   }
 
-  private async deploy_aws_stack(
+  async deploy_aws_stack(
     stack_name: string,
     key_name: string,
     db_password: string,
@@ -202,13 +205,13 @@ export class AWSWordpressService {
     let result: DescribeStacksCommandOutput;
     let output: string;
     while (true) {
-      await new Promise((resolve) => setTimeout(resolve, 10000));
       result = await this.client_cf.describe_stacks(stack_name);
       console.debug('Create stack in progress');
       if (result && result.Stacks && result.Stacks[0].Outputs) {
         output = result?.Stacks[0]?.Outputs[0]?.OutputValue;
         break;
       }
+      await new Promise((resolve) => setTimeout(resolve, 10000));
     }
 
     /** return origin ip  */

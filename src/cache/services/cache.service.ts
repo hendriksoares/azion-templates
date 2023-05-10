@@ -1,7 +1,7 @@
 import { AzionService } from 'src/@common/services/azion.service';
-import { CacheDto } from './dtos/cache.dto';
-import { CacheCreateDto } from './dtos/create.dto';
-import { CacheUpdateDto } from './dtos/update.dto';
+import { CacheDto } from '../dtos/cache.dto';
+import { CacheCreateDto } from '../dtos/create.dto';
+import { CacheUpdateDto } from '../dtos/update.dto';
 
 /**
  * A class service to manage cache on Azion

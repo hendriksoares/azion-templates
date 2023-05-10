@@ -1,27 +1,27 @@
-import { EdgeApplicationCreateDto } from '../dtos/create.dto';
-import { EdgeApplicationDto } from '../dtos/edge.dto';
-import { EdgeApplicationUpdateDto } from '../dtos/update.dto';
-import { EdgeService } from '../services/edge.service';
+import { CacheService } from '../services/cache.service';
+import { CacheDto } from '../dtos/cache.dto';
+import { CacheCreateDto } from '../dtos/create.dto';
+import { CacheUpdateDto } from '../dtos/update.dto';
 
-describe('# EdgeService', () => {
-  let service: EdgeService;
+describe('# CacheService', () => {
+  let service: CacheService;
 
   beforeEach(() => {
-    service = new EdgeService();
+    service = new CacheService();
     service.http = {
       post: jest.fn().mockReturnValue(
         new Promise((resolve) => {
-          resolve({ data: { results: new EdgeApplicationDto() } });
+          resolve({ data: { results: new CacheDto() } });
         }),
       ),
       get: jest.fn().mockReturnValue(
         new Promise((resolve) => {
-          resolve({ data: { results: new EdgeApplicationDto() } });
+          resolve({ data: { results: new CacheDto() } });
         }),
       ),
       patch: jest.fn().mockReturnValue(
         new Promise((resolve) => {
-          resolve({ data: { results: new EdgeApplicationDto() } });
+          resolve({ data: { results: new CacheDto() } });
         }),
       ),
       delete: jest.fn().mockReturnValue(
@@ -39,6 +39,9 @@ describe('# EdgeService', () => {
     it('create should be defined', () => {
       expect(service.create).toBeDefined();
     });
+    it('find by edge should be defined', () => {
+      expect(service.find_by_edge);
+    });
     it('find one should be defined', () => {
       expect(service.find_one);
     });
@@ -51,18 +54,27 @@ describe('# EdgeService', () => {
   });
 
   describe('## Create', () => {
-    const data = new EdgeApplicationCreateDto();
     beforeEach(async () => {
-      await service.create(data);
+      const data = new CacheCreateDto();
+      await service.create(data, '');
     });
     it('should be call external post api', () => {
       expect(service.http.post).toBeCalled();
     });
   });
 
+  describe('## FindByEdge', () => {
+    beforeEach(async () => {
+      await service.find_by_edge('');
+    });
+    it('should be call external get api', () => {
+      expect(service.http.get).toBeCalled();
+    });
+  });
+
   describe('## FindOne', () => {
     beforeEach(async () => {
-      await service.find_one('');
+      await service.find_one('', '');
     });
     it('should be call external get api', () => {
       expect(service.http.get).toBeCalled();
@@ -70,9 +82,9 @@ describe('# EdgeService', () => {
   });
 
   describe('## Update', () => {
-    const data = new EdgeApplicationUpdateDto();
     beforeEach(async () => {
-      await service.update(data);
+      const data = new CacheUpdateDto();
+      await service.update('', '', data);
     });
     it('should be call external patch api', () => {
       expect(service.http.patch).toBeCalled();
@@ -81,7 +93,7 @@ describe('# EdgeService', () => {
 
   describe('## Delete', () => {
     beforeEach(async () => {
-      await service.delete('');
+      await service.delete('', '');
     });
     it('should be call external delete api', () => {
       expect(service.http.delete).toBeCalled();
