@@ -1,55 +1,60 @@
 # **Azion Templates**
 
+Project developed with Typescript and Jest (unit tests). Also added some lint test automation tools (.vscode) and commit controls (.husky).
+
 ## **1. Wordpress Azion with AWS**
 
-Esse template tem como objetivo criar uma blog Wordpress a partir do zero utilizando a infraestrutura da AWS e configurar sobre essa origem uma edge application na Azion.
+This template create a wordpress blog from scratch using a AWS infrastructure. Also, configure AZION edge application with domain and pre configured rules engines.
 
-### **1.1. Variábeis de ambiente**
+### **1.1. Enviroment variables**
 
-Para iniciar a configuração precisamos das chaves de acesso à AWS: 
+To start we need AWS crendentials keys:
+
 - **AWS Access Key ID**;
 - **AWS Secret Access Key**;
 
-> **Obs:** Essa chaves devem ser temporárias apenas para execução do template e devem ter permissões para criar máquinas virtuais EC2 dentro de sua conta AWS.
+> **Obs:** This must be temporary just for running the template. And msut have permission to create a EC2 machine and execute cloudformation script.
 
-Além disso, precisamos de outras variáveis de configuração:
+As well, we need other environment variables to database and AZION edge application:
 
-Configurações Wordpress:
+Wordpress variables:
 
->- **Database User** (MYSQL_DB_USER) usuário para o banco de dados; 
->- **Database User Password** (MYSQL_DB_PASSWORD) senha do usuário;
->- **Database Root Password** (MYSQL_DB_ROOT_PASSWORD) senha do usuário root; 
+>- **Database User** (MYSQL_DB_USER) database username; 
+>- **Database User Password** (MYSQL_DB_PASSWORD) user password;
+>- **Database Root Password** (MYSQL_DB_ROOT_PASSWORD) root user password; 
 
-configurações Azion:
+AZION variables:
 
->- **Application Name** (AZION_APP_NAME) nome da aplicação;
->- **Azion Api URL** (AZION_API_URL) url da api da azion;
->- **Azion Personal Token** (AZION_PERSONAL_TOKEN) token pessoal para acesso a conta da AWS;
+>- **Application Name** (AZION_APP_NAME) application name;
+>- **Azion Api URL** (AZION_API_URL) azion api url;
+>- **Azion Personal Token** (AZION_PERSONAL_TOKEN) azion personal token (or cookies);
+>- **Azion Cookie** (COOKIE_AUTH_NAME && COOKIE_NAME) azion cookie azsid;
 
-> **Obs:** Para execução no script runner podemos usar o cookie de sessão para gerar o token de acesso.
+> **Obs:** In script runner we can user cookie session to acess api.
 
-### **1.2. Execução** 
+### **1.2. Executions** 
 
-A execução do template pode ser dividida em 2 etapas:
+The construction happen in two stage:
 
-1. **Criação da infraestrutura na AWS**
-  - Execução da stack (cloudformation);
-  - Construção da máquina EC2 e instalação do Wordpress;
-  - Definição do IP de acesso a máquina virtual;
+1. **Build the AWS infrastructure**
+  - Start cloudformation script;
+  - Deploy a EC2 machine (t3.micro - free tier);
+  - And define a external IP;
 
-2. **Configuração aplicação**
-  - Construção da edge application;
-  - Definição do domínio com origem apontada para o IP da máquina virtual;
-  - Definindo as regras de cache;
-  - Aplicandos as regras de cache e comportamento (rules engine);
+2. **Configure AZION edge application**
+  - Configure a new edge application;
+  - Define the new origem EC2 IP (from AWS build);
+  - Create a new domain to acess the edge application;
+  - Create some cache rules to static and images files;
+  - Add new engine rules to cache page and ignore admin url (wp-);
 
-### **1.3. Notas**
+### **1.3. Notes**
 
->- Durante o criação da EC2 é necessário a criação de um par de chave (KeyPair) na AWS. Essa chave terá o mesmo valor do nome da aplicação (AZION_APP_NAME);
->- O primeiro acesso ao Wordpress deve ocorrer via URL da Azion (Domain), pois o blog irá associar a URL base atráves da URL do primeiro acesso;
->- Devido a acesso a conta de terceiro na AWS o processo não tem rollback por questões de segurança. (Não queremos a permissão de excluir dentro da AWS);
->- Existe uma padrão de senha mínimo para o banco SQL ( regex: [a-zA-Z0-9]*);
+>- To create a EC2 virutal machine we need a keyPair and this key take the same edge application name (AZION_APP_NAME).
+>- The first acess to wordpress must be via Azion Domain, because the wordpress configure "BASE URL" from current first acess URL;
+>- Due to third-party account access we don't make rollback. For security reasons we don't perfome delete action in third-party account;
+>- There is a minimum requiriment to database password ( regex: [a-zA-Z0-9]*);
 
-### **1.4. Melhorias**
-- A chave fornecida da AWS não tem permissão para executar as ações necessárias (ou inválida);
-- Tratar erros de chamadas para Azion API
+### **1.4. To do**
+- Add error handling when the AWS doesn't have permission to excute script;
+- Add error handling to Azion API calls;
